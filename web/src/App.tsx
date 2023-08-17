@@ -1,5 +1,5 @@
-import MenuBar from "./MenuBar";
-import TabView from "./TabView";
+import MenuBar from "../components/MenuBar";
+import TabView from "../components/TabView";
 import "./App.css";
 
 function App() {
