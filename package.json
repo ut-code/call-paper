@@ -1,0 +1,26 @@
+{
+  "name": "call-paper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ut-code/call-paper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ut-code/call-paper/issues"
+  },
+  "homepage": "https://github.com/ut-code/call-paper#readme",
+  "devDependencies": {
+    "eslint": "^8.47.0",
+    "eslint-config-airbnb-typescript-prettier": "^5.0.0",
+    "prettier": "^2.8.8"
+  }
+}

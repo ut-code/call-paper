@@ -1,0 +1,8 @@
+{
+  "root": true,
+  "extends": "airbnb-typescript-prettier",
+  "rules": {
+    "no-restricted-syntax": "off", // Allow using for-of syntax
+    "import/no-unresolved": "off" // Use TypeScript instead
+  }
+}
