@@ -4,7 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { useContext } from "react";
-import { PaperInfosContext, SetClickedIndexContext } from "./contexts";
+import { PaperInfosContext, SetEditingIndexContext } from "./contexts";
 
 type PaperListProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,7 +12,7 @@ type PaperListProps = {
 
 export default function PaperList(props: PaperListProps) {
   const paperInfos = useContext(PaperInfosContext);
-  const setClickedIndex = useContext(SetClickedIndexContext);
+  const setEditingIndex = useContext(SetEditingIndexContext);
   const { setOpen } = props;
   return (
     <Box
@@ -30,7 +30,7 @@ export default function PaperList(props: PaperListProps) {
                 <ListItemButton
                   onContextMenu={(e) => {
                     e.preventDefault();
-                    setClickedIndex(index);
+                    setEditingIndex(index);
                     setOpen(true);
                   }}
                 >

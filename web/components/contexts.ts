@@ -17,7 +17,7 @@ export const SetPaperInfosContext = createContext<
   React.Dispatch<React.SetStateAction<PaperInfo[]>>
 >(() => {});
 
-export const ClickedIndexContext = createContext<number>(-1);
-export const SetClickedIndexContext = createContext<
+export const EditingIndexContext = createContext<number>(-1);
+export const SetEditingIndexContext = createContext<
   React.Dispatch<React.SetStateAction<number>>
 >(() => {});

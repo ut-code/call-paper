@@ -3,10 +3,10 @@ import SearchBar from "./SearchBar";
 import PaperList from "./PaperList";
 import BottomBar from "./BottomBar";
 import RightDrawer from "./RightDrawer";
-import { ClickedIndexContext, SetClickedIndexContext } from "./contexts";
+import { EditingIndexContext, SetEditingIndexContext } from "./contexts";
 
 export default function SearchArea() {
-  const [clickedIndex, setClickedIndex] = useState<number>(-1);
+  const [editingIndex, setEditingIndex] = useState<number>(-1);
   const [open, setOpen] = useState<boolean>(false);
   const contentStyle: CSSProperties = {
     overflow: "auto",
@@ -19,8 +19,8 @@ export default function SearchArea() {
   //   setOpen(isOpen);
   // };
   return (
-    <ClickedIndexContext.Provider value={clickedIndex}>
-      <SetClickedIndexContext.Provider value={setClickedIndex}>
+    <EditingIndexContext.Provider value={editingIndex}>
+      <SetEditingIndexContext.Provider value={setEditingIndex}>
         <div
           style={{
             display: "grid",
@@ -41,7 +41,7 @@ export default function SearchArea() {
             <RightDrawer open={open} setOpen={setOpen} />
           </div>
         </div>
-      </SetClickedIndexContext.Provider>
-    </ClickedIndexContext.Provider>
+      </SetEditingIndexContext.Provider>
+    </EditingIndexContext.Provider>
   );
 }

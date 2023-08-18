@@ -1,7 +1,7 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { useContext } from "react";
 import {
-  ClickedIndexContext,
+  EditingIndexContext,
   PaperInfosContext,
   SetPaperInfosContext,
 } from "./contexts";
@@ -15,7 +15,7 @@ type EditorBlockProps = {
 export default function EditorBlock(props: EditorBlockProps) {
   const paperInfos = useContext(PaperInfosContext);
   const setPaperInfos = useContext(SetPaperInfosContext);
-  const clickedIndex = useContext(ClickedIndexContext);
+  const editingIndex = useContext(EditingIndexContext);
   const { editorTarget, maxRows } = props;
 
   return (
@@ -27,11 +27,11 @@ export default function EditorBlock(props: EditorBlockProps) {
       <TextField
         multiline
         maxRows={maxRows}
-        defaultValue={paperInfos[clickedIndex]?.[editorTarget]}
+        defaultValue={paperInfos[editingIndex]?.[editorTarget]}
         onChange={(e) => {
           setPaperInfos(
             paperInfos.map((paperInfo, index) => {
-              if (index === clickedIndex) {
+              if (index === editingIndex) {
                 return {
                   ...paperInfo,
                   [editorTarget]: e.target.value,
