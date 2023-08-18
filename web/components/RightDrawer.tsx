@@ -1,19 +1,21 @@
-import { Box, Button, Drawer, TextField, Typography } from "@mui/material";
+import { Box, Button, Drawer } from "@mui/material";
+import EditorBlock from "./EditorBlock";
 
 type RightDrawerProps = {
   open: boolean;
-  toggleDrawer: (isOpen: boolean) => () => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function RightDrawer(props: RightDrawerProps) {
-  const { open, toggleDrawer } = props;
-
+  const { open, setOpen } = props;
   return (
     <Box>
       <Drawer
         anchor="right"
         open={open}
-        onClose={toggleDrawer(false)}
+        onClose={() => {
+          setOpen(false);
+        }}
         sx={{
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
@@ -35,48 +37,13 @@ export default function RightDrawer(props: RightDrawerProps) {
           }}
         >
           <Box>
-            <Box>
-              <Typography variant="h6" gutterBottom>
-                TITLE
-              </Typography>
-              <TextField multiline maxRows={4} />
-            </Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                YEAR
-              </Typography>
-              <TextField />
-            </Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                AUTHOR
-              </Typography>
-              <TextField />
-            </Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                JOURNAL
-              </Typography>
-              <TextField />
-            </Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                TAGS
-              </Typography>
-              <TextField />
-            </Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                CITATIONS
-              </Typography>
-              <TextField />
-            </Box>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                CITED BY
-              </Typography>
-              <TextField />
-            </Box>
+            <EditorBlock editorTarget="title" maxRows={4} />
+            <EditorBlock editorTarget="year" maxRows={1} />
+            <EditorBlock editorTarget="author" maxRows={1} />
+            <EditorBlock editorTarget="journal" maxRows={1} />
+            <EditorBlock editorTarget="tags" maxRows={1} />
+            <EditorBlock editorTarget="citations" maxRows={1} />
+            <EditorBlock editorTarget="citedBy" maxRows={1} />
           </Box>
         </Box>
         <Box
@@ -90,7 +57,12 @@ export default function RightDrawer(props: RightDrawerProps) {
           }}
         >
           <Button variant="contained">SAVE</Button>
-          <Button variant="outlined" onClick={toggleDrawer(false)}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
             CANCEL
           </Button>
         </Box>

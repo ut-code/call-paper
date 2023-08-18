@@ -3,8 +3,10 @@ import SearchBar from "./SearchBar";
 import PaperList from "./PaperList";
 import BottomBar from "./BottomBar";
 import RightDrawer from "./RightDrawer";
+import { ClickedIndexContext, SetClickedIndexContext } from "./contexts";
 
 export default function SearchArea() {
+  const [clickedIndex, setClickedIndex] = useState<number>(-1);
   const [open, setOpen] = useState<boolean>(false);
   const contentStyle: CSSProperties = {
     overflow: "auto",
@@ -13,29 +15,33 @@ export default function SearchArea() {
     display: "flex",
     flexDirection: "column",
   };
-  const toggleDrawer = (isOpen: boolean) => () => {
-    setOpen(isOpen);
-  };
+  // const toggleDrawer = (isOpen: boolean) => () => {
+  //   setOpen(isOpen);
+  // };
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateRows: "max-content minmax(0, 1fr)",
-      }}
-    >
-      <SearchBar />
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "minmax(0, 1fr) max-content",
-        }}
-      >
-        <div style={contentStyle}>
-          <PaperList toggleDrawer={toggleDrawer} />
-          <BottomBar />
+    <ClickedIndexContext.Provider value={clickedIndex}>
+      <SetClickedIndexContext.Provider value={setClickedIndex}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateRows: "max-content minmax(0, 1fr)",
+          }}
+        >
+          <SearchBar />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1fr) max-content",
+            }}
+          >
+            <div style={contentStyle}>
+              <PaperList setOpen={setOpen} />
+              <BottomBar />
+            </div>
+            <RightDrawer open={open} setOpen={setOpen} />
+          </div>
         </div>
-        <RightDrawer open={open} toggleDrawer={toggleDrawer} />
-      </div>
-    </div>
+      </SetClickedIndexContext.Provider>
+    </ClickedIndexContext.Provider>
   );
 }

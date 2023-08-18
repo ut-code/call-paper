@@ -3,34 +3,17 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-
-const paperTitles = [
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-];
+import { useContext } from "react";
+import { PaperInfosContext, SetClickedIndexContext } from "./contexts";
 
 type PaperListProps = {
-  toggleDrawer: (isOpen: boolean) => () => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function PaperList(props: PaperListProps) {
-  const { toggleDrawer } = props;
+  const paperInfos = useContext(PaperInfosContext);
+  const setClickedIndex = useContext(SetClickedIndexContext);
+  const { setOpen } = props;
   return (
     <Box
       sx={{
@@ -41,11 +24,18 @@ export default function PaperList(props: PaperListProps) {
     >
       <nav>
         <List sx={{ p: 0, m: 0 }}>
-          {paperTitles.map((paperTitle) => {
+          {paperInfos.map((paperInfo, index) => {
             return (
-              <ListItem disablePadding>
-                <ListItemButton onClick={toggleDrawer(true)}>
-                  <ListItemText primary={paperTitle} />
+              <ListItem disablePadding key={paperInfo.id}>
+                <ListItemButton
+                  onClick={() => {
+                    setClickedIndex(index);
+                    setOpen(true);
+                  }}
+                >
+                  <ListItemText
+                    primary={`${paperInfo.author} ${paperInfo.title} ${paperInfo.year}`}
+                  />
                 </ListItemButton>
               </ListItem>
             );
