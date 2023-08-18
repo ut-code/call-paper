@@ -3,10 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "tsc"
+    "build": "esbuild src/*.ts --outdir=../dist/functions --bundle",
+    "type-check": "tsc"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230419.0",
+    "esbuild": "^0.19.2",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "mathjs": "^11.9.1"
   }
 }
