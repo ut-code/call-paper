@@ -1,5 +1,5 @@
 import ArticleNode from "./makeGraph/ArticleNode";
-import {scale} from "./makeGraph/ArticleNode";
+import {scaleX,scaleY} from "./makeGraph/ArticleNode";
 import {calcNodesPos,papers,type Paper,type positionType} from "./makeGraph/calcNodesPos"
 import { type edge,EdgePos } from "./makeGraph/calcEdgePos";
 
@@ -16,18 +16,18 @@ export default function GraphArea() {
   // }
   
   return (
-    <svg width="100%" height="500">
+    <svg width="100%" height="100vh">
       {/* <ArticleNode x={10} y={20} />
       <ArticleNode x={500} y={150} /> */}
       
       {
         edges.map((edge)=>(
-<path d={`M ${edge.startX*scale} ${edge.startY*scale} C ${edge.startControlX*scale} ${edge.startControlY*scale}, ${edge.endControlX*scale} ${edge.endControlY*scale}, ${edge.endX*scale} ${edge.endY*scale}`} stroke="black" fill="transparent"/>
+<path d={`M ${edge.startX*scaleX} ${edge.startY*scaleY} C ${edge.startControlX*scaleX} ${edge.startControlY*scaleY}, ${edge.endControlX*scaleX} ${edge.endControlY*scaleY}, ${edge.endX*scaleX} ${edge.endY*scaleY}`} stroke="black" fill="transparent"/>
         ))
       }
       {
         paps.map((pap) => (
-          <ArticleNode key={pap.id} x={pos.get(pap.id)!.x*scale} y={pos.get(pap.id)!.y*scale}/>
+          <ArticleNode key={pap.id} x={pos.get(pap.id)!.x*scaleX} y={pos.get(pap.id)!.y*scaleY} author="Liang Fu, C. Kane" title="LK-99 isn't a superconductor — how science sleuths solved the mystery" publisher="Phys. Rev. Lett."/>
         ))
       }
       

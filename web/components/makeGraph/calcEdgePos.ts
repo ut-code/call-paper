@@ -15,7 +15,7 @@ export function EdgePos(nodePos:positionType,paps:Paper[]) {
             let y2=nodePos.get(papCiteId)!.y
             let endX=x2+nodesStyle.Width*0.5
             let endY=y2+nodesStyle.Height
-            edges.push({citeId:pap.id,citedId:papCiteId,startX:startX,startY:startY,startControlX:(startX+endX*2)*0.33,startControlY:(startY+endY*2)*0.33,endControlX:(startX*2+endX)*0.3,endControlY:(startY*2+endY)*0.33,endX:endX,endY:endY})
+            edges.push({citeId:pap.id,citedId:papCiteId,startX:startX,startY:startY,startControlX:startX*0.7+endX*0.1,startControlY:startY*0.7+endY*0.1,endControlX:startX*0.3+endX*0.9,endControlY:startY*0.3+endY*0.9,endX:endX,endY:endY})
         }
         
     }
