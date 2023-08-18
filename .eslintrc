@@ -3,6 +3,7 @@
   "extends": "airbnb-typescript-prettier",
   "rules": {
     "no-restricted-syntax": "off", // Allow using for-of syntax
-    "import/no-unresolved": "off" // Use TypeScript instead
+    "import/no-unresolved": "off", // Use TypeScript instead
+    "react/require-default-props": "off"
   }
 }
