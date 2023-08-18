@@ -28,7 +28,8 @@ export default function PaperList(props: PaperListProps) {
             return (
               <ListItem disablePadding key={paperInfo.id}>
                 <ListItemButton
-                  onClick={() => {
+                  onContextMenu={(e) => {
+                    e.preventDefault();
                     setClickedIndex(index);
                     setOpen(true);
                   }}
