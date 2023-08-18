@@ -25,14 +25,18 @@ const paperTitles = [
   "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
 ];
 
-export default function PaperList() {
+type PaperListProps = {
+  toggleDrawer: (isOpen: boolean) => () => void;
+};
+
+export default function PaperList(props: PaperListProps) {
+  const { toggleDrawer } = props;
   return (
     <Box
       sx={{
         width: "100%",
-        height: "560px", // todo: 動的に決定する
+        flex: "auto",
         bgcolor: "background.paper",
-        overflow: "scroll",
       }}
     >
       <nav>
@@ -40,7 +44,7 @@ export default function PaperList() {
           {paperTitles.map((paperTitle) => {
             return (
               <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton onClick={toggleDrawer(true)}>
                   <ListItemText primary={paperTitle} />
                 </ListItemButton>
               </ListItem>

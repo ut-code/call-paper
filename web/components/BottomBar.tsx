@@ -1,6 +1,7 @@
 import { ButtonBase } from "@mui/material";
 import FlareIcon from "@mui/icons-material/Flare";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Box from "@mui/material/Box";
 
 const buttonStyle = {
   display: "flex",
@@ -12,16 +13,19 @@ const buttonStyle = {
 
 export default function BottomBar() {
   return (
-    <div
+    <Box
       style={{
+        height: "24px",
+        position: "sticky",
+        bottom: 0,
         display: "flex",
-        height: "41px",
-        padding: "0px 12px",
+        padding: "12px",
         alignItems: "center",
         gap: "10px",
         alignSelf: "stretch",
         color: "#ffffff",
         backgroundColor: "#0D47A1",
+        flexGrow: "1",
       }}
     >
       <span style={{ flex: "auto" }}>12 item(s) selected</span>
@@ -33,6 +37,6 @@ export default function BottomBar() {
         <DeleteIcon />
         DELETE
       </ButtonBase>
-    </div>
+    </Box>
   );
 }

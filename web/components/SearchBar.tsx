@@ -6,6 +6,8 @@ export default function SearchBar() {
   return (
     <div
       style={{
+        position: "sticky",
+        top: 0,
         display: "flex",
         backgroundColor: "#ffffff",
         padding: "6px 30px 6px 6px",

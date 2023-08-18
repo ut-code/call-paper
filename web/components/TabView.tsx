@@ -29,10 +29,16 @@ function TabComponent() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateRows: "max-content minmax(0, 1fr)",
+      }}
+    >
       <div
         style={{
           display: "flex",
+          flex: "auto",
           backgroundColor: "#e0e0e0",
           borderTop: "1px solid #757575",
           borderBottom: "1px solid #757575",
