@@ -6,6 +6,6 @@ jobs:
       - uses: actions/checkout@v3
       - run: npm ci && npm run type-check
         working-directory: web
-      # - run: npm ci && npm run type-check
-      #   working-directory: functions
+      - run: npm ci && npm run type-check
+        working-directory: functions
       - run: npm ci && npm run lint
