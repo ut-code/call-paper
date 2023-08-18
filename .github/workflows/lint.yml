@@ -4,6 +4,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: npm ci
-      - run: npm run type-check
-      - run: npm run lint
+      - run: npm ci && npm run type-check
+        working-directory: web
+      - run: npm ci && npm run type-check
+        working-directory: functions
+      - run: npm ci && npm run lint
