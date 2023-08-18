@@ -2,16 +2,21 @@ type ArticleNodeProps = {
   x: number;
   y: number;
 };
-
+export const nodesStyle={
+  Width:0.5,
+  Height:0.5,
+}
+export const scale:number=50
 export default function ArticleNode(props: ArticleNodeProps): JSX.Element {
   const { x, y } = props;
+
   return (
     <>
       <rect
         x={x}
         y={y}
-        width="200"
-        height="200"
+        width={nodesStyle.Width*scale}
+        height={nodesStyle.Height*scale}
         stroke="black"
         strokeWidth="2"
         fill="none"
