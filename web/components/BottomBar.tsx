@@ -25,7 +25,6 @@ export default function BottomBar() {
         alignSelf: "stretch",
         color: "#ffffff",
         backgroundColor: "#0D47A1",
-        flexGrow: "1",
       }}
     >
       <span style={{ flex: "auto" }}>12 item(s) selected</span>
