@@ -23,7 +23,7 @@ export default function ArticleNode(props: ArticleNodeProps): JSX.Element {
         height={nodesStyle.Height * scaleY}
         stroke="black"
         strokeWidth="2"
-        fill="none"
+        fill="white"
       />
       {/* <text x={x + 10} y={y + 20} fontFamily="Arial" fontSize="16" fill="black">
         title
