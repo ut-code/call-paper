@@ -15,9 +15,9 @@ export const PaperInfosContext = createContext<PaperInfo[]>([
 ]);
 export const SetPaperInfosContext = createContext<
   React.Dispatch<React.SetStateAction<PaperInfo[]>>
->(() => {});
+>(() => undefined);
 
 export const EditingIndexContext = createContext<number>(-1);
 export const SetEditingIndexContext = createContext<
   React.Dispatch<React.SetStateAction<number>>
->(() => {});
+>(() => undefined);
