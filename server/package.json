@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "esbuild src/*.ts --outdir=../dist/functions --bundle",
+    "build": "esbuild src/*.ts --outdir=../dist/server --bundle",
     "type-check": "tsc"
   },
   "devDependencies": {

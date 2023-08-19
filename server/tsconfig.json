@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    "outDir": "../dist/functions",
+    "outDir": "../dist/server",
     "target": "es2021",
     "lib": ["es2021"],
     "module": "es2022",

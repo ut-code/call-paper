@@ -7,5 +7,5 @@ jobs:
       - run: npm ci && npm run type-check
         working-directory: web
       - run: npm ci && npm run type-check
-        working-directory: functions
+        working-directory: server
       - run: npm ci && npm run lint
