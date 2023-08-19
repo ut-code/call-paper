@@ -2,7 +2,13 @@ import { Button, Input, InputAdornment } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 
-export default function SearchBar() {
+type SerchBarProps = {
+  setOpen: (isOpen: boolean) => void;
+  setEditingIndex: (index: number) => void;
+};
+
+export default function SearchBar(props: SerchBarProps) {
+  const { setOpen, setEditingIndex } = props;
   return (
     <div
       style={{
@@ -17,7 +23,14 @@ export default function SearchBar() {
         borderBottom: "1px solid #e0e0e0",
       }}
     >
-      <Button variant="outlined" color="inherit">
+      <Button
+        variant="outlined"
+        color="inherit"
+        onClick={() => {
+          setEditingIndex(-2);
+          setOpen(true);
+        }}
+      >
         <AddIcon />
         New
       </Button>

@@ -156,14 +156,30 @@ export default function RightDrawer(props: RightDrawerProps) {
           <Button
             variant="contained"
             onClick={() => {
-              setPaperInfos(
-                paperInfos.map((paperInfo, index) => {
-                  if (index === editingIndex) {
-                    return editingPaper;
-                  }
-                  return paperInfo;
-                })
-              );
+              if (editingIndex === -2) {
+                setPaperInfos([
+                  ...paperInfos,
+                  {
+                    id: String(paperInfos.length + 1),
+                    author: editingPaper.author ?? "",
+                    title: editingPaper.title ?? "",
+                    year: editingPaper.year ?? "",
+                    journal: editingPaper.journal ?? "",
+                    tags: editingPaper.tags ?? [],
+                    citations: editingPaper.citations ?? [],
+                    citedBy: editingPaper.citedBy ?? [],
+                  },
+                ]);
+              } else {
+                setPaperInfos(
+                  paperInfos.map((paperInfo, index) => {
+                    if (index === editingIndex) {
+                      return editingPaper;
+                    }
+                    return paperInfo;
+                  })
+                );
+              }
               setOpen(false);
             }}
           >
