@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "setup": "npm ci && npm --prefix web ci && npm --prefix functions ci",
-    "build": "npm --prefix web run build && npm --prefix functions run build"
+    "build": "npm --prefix web run build"
   },
   "repository": {
     "type": "git",
