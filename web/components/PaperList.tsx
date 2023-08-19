@@ -4,6 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { usePaperInfosContext } from "./contexts";
+// import type { PaperInfo } from "../src/App";
 
 type PaperListProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;

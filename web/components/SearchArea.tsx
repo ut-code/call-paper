@@ -30,7 +30,7 @@ export default function SearchArea(props: SearchAreaProps) {
         gridTemplateRows: "max-content minmax(0, 1fr)",
       }}
     >
-      <SearchBar />
+      <SearchBar setOpen={setOpen} setEditingIndex={setEditingIndex} />
       <div
         style={{
           display: "grid",
