@@ -9,8 +9,10 @@ export const nodesStyle = {
   Width: 0.9,
   Height: 0.4,
 };
-export const scaleX: number = window.parent.screen.width * 0.16;
-export const scaleY: number = window.parent.screen.height * 0.2;
+// export const scaleX: number = window.parent.screen.width * 0.16;
+// export const scaleY: number = window.parent.screen.height * 0.2;
+export const scaleX: number = 1280 * 0.16;
+export const scaleY: number = 720 * 0.2;
 export default function ArticleNode(props: ArticleNodeProps): JSX.Element {
   const { x, y, author, publisher } = props;
 
