@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import type { PaperInfo } from "../../src/App";
+
 export type Paper = { id: string; year: number; referencedPaperIds: string[] };
 // 以下のpapersはユーザーがgraphを作るために選択した論文リスト
 export const papers: Paper[] = [
@@ -16,14 +18,28 @@ export const papers: Paper[] = [
   { id: "8", year: 2007, referencedPaperIds: ["7"] },
   { id: "9", year: 2008, referencedPaperIds: ["3"] },
   { id: "10", year: 2008, referencedPaperIds: ["2"] },
-  { id: "11", year: 2009, referencedPaperIds: ["3"] },
+  { id: "11", year: 2090, referencedPaperIds: ["3"] },
   { id: "12", year: 2010, referencedPaperIds: ["5"] },
-  { id: "13", year: 2011, referencedPaperIds: ["7"] },
+  { id: "13", year: 2015, referencedPaperIds: ["7"] },
   { id: "14", year: 2012, referencedPaperIds: ["7"] },
   { id: "15", year: 2013, referencedPaperIds: ["7"] },
   { id: "16", year: 2014, referencedPaperIds: ["7"] },
   { id: "17", year: 2015, referencedPaperIds: ["7"] },
 ];
+
+export function makePaps(paperInfos: PaperInfo[], selectedIds: string[]) {
+  const papsRandom: Paper[] = [];
+  for (const selectedId of selectedIds) {
+    const pap = paperInfos.find((papTemp) => papTemp.id === selectedId)!;
+    papsRandom.push({
+      id: selectedId,
+      year: pap.year,
+      referencedPaperIds: pap.citations,
+    });
+  }
+  const paps = papsRandom.sort((pap1, pap2) => pap1.year - pap2.year);
+  return paps;
+}
 
 export type positionType = Map<string, { x: number; y: number }>;
 const paperPositions: positionType = new Map();
