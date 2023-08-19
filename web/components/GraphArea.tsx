@@ -8,31 +8,35 @@ import ArticleNode, {
 } from "./makeGraph/ArticleNode";
 import {
   calcNodesPos,
-  papers,
   type Paper,
   type positionType,
+  makePaps,
 } from "./makeGraph/calcNodesPos";
 import { type edge, EdgePos } from "./makeGraph/calcEdgePos";
+import defaultPaperInfos from "./defaultPaperInfos";
 
-const paps: Paper[] = papers;
 // for (let index = 0; index < 10; index++) {
 //   writePaper(paps)
 // }
-const pos: positionType = calcNodesPos(paps);
-const maxX =
-  Array.from(pos.values()).reduce((max, position) => {
-    return Math.max(max, position.x);
-  }, -Infinity) + nodesStyle.Width;
-const maxY =
-  Array.from(pos.values()).reduce((max, position) => {
-    return Math.max(max, position.y);
-  }, -Infinity) + nodesStyle.Height;
-const edges: edge[] = EdgePos(pos, paps);
+
 export default function GraphArea() {
   // for (let index = 0; index < paps.length; index++) {
   //   console.log(pos.get(paps[index]!.id));
 
   // }
+  const selectedIds: string[] = ["1", "2", "3"];
+
+  const paps: Paper[] = makePaps(defaultPaperInfos, selectedIds);
+  const pos: positionType = calcNodesPos(paps);
+  const maxX =
+    Array.from(pos.values()).reduce((max, position) => {
+      return Math.max(max, position.x);
+    }, -Infinity) + nodesStyle.Width;
+  const maxY =
+    Array.from(pos.values()).reduce((max, position) => {
+      return Math.max(max, position.y);
+    }, -Infinity) + nodesStyle.Height;
+  const edges: edge[] = EdgePos(pos, paps);
 
   return (
     <Box
@@ -60,8 +64,13 @@ export default function GraphArea() {
             key={pap.id}
             x={pos.get(pap.id)!.x * scaleX}
             y={pos.get(pap.id)!.y * scaleY}
-            author="Liang Fu, C. Kane"
-            publisher="Phys. Rev. Lett."
+            author={
+              defaultPaperInfos.find((papTemp) => papTemp.id === pap.id)!.author
+            }
+            publisher={
+              defaultPaperInfos.find((papTemp) => papTemp.id === pap.id)!
+                .journal
+            }
           />
         ))}
       </svg>
