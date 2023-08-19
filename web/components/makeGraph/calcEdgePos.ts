@@ -11,6 +11,9 @@ export function EdgePos(nodePos:positionType,paps:Paper[]) {
         let startX=x1+nodesStyle.Width*0.5
         let startY=y1
         for (const papCiteId of pap.referencedPaperIds) {
+            if (paps.find((pap)=>pap.id===papCiteId)===undefined) {
+                continue
+            }    
             let x2=nodePos.get(papCiteId)!.x
             let y2=nodePos.get(papCiteId)!.y
             let endX=x2+nodesStyle.Width*0.5

@@ -5,7 +5,7 @@ export const papers: Paper[] = [
     { id: "1", year: 2005, referencedPaperIds: ["0"] },
     { id: "2", year: 2005, referencedPaperIds: ["1"] },
     { id: "3", year: 2005, referencedPaperIds: ["0"] },
-    { id: "4", year: 2005, referencedPaperIds: ["3"] },
+    { id: "4", year: 2005, referencedPaperIds: ["3","another"] },
     { id: "5", year: 2005, referencedPaperIds: ["2"] },
     { id: "6", year: 2005, referencedPaperIds: ["0"] },
     { id: "7", year: 2006, referencedPaperIds: ["2"] },
@@ -99,7 +99,7 @@ function posChange(pos: positionType,paps:Paper[] ,i: number) {
 
 export function calcNodesPos(paps:Paper[]) {
     let pos = makeInitPos(paps)
-    const iteration = 50;
+    const iteration = 70;
     for (let n = 0; n < iteration; n++) {
         let present_pos = structuredClone(pos);
         for (let i = 0; i < n/iteration*0.5*paps.length; i++) {
