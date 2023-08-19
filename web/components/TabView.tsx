@@ -4,8 +4,6 @@ import ButtonBase from "@mui/material/ButtonBase";
 import SearchArea from "./SearchArea";
 import GraphArea from "./GraphArea";
 
-type tab = "searchTab" | "graphTab";
-
 const buttonStyle = {
   borderRight: "1px solid #757575",
   display: "flex",
@@ -14,19 +12,13 @@ const buttonStyle = {
   gap: "12px",
 };
 
-function TabComponent() {
-  const [existTabs, setExistTabs] = useState<{
-    searchTab: boolean;
-    graphTab: boolean;
-  }>({
-    searchTab: true,
-    graphTab: true,
-  });
-  const [activeTab, setActiveTab] = useState<tab>("searchTab");
+type Tab = { type: "search" } | { type: "graph"; paperIds: string[] };
 
-  const handleTabClick = (tab: tab) => {
-    setActiveTab(tab);
-  };
+function TabComponent() {
+  const [tabs, setTabs] = useState<Tab[]>([{ type: "search" }]);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const activeTab = tabs[activeTabIndex];
+  if (!activeTab) throw new Error("No tabs are selected.");
 
   return (
     <div
@@ -44,45 +36,33 @@ function TabComponent() {
           borderBottom: "1px solid #757575",
         }}
       >
-        {existTabs.searchTab && (
+        {tabs.map((tab, i) => (
           <ButtonBase
-            onClick={() => handleTabClick("searchTab")}
+            onClick={() => setActiveTabIndex(i)}
             type="button"
-            style={
-              activeTab === "searchTab"
-                ? { backgroundColor: "#ffffff", ...buttonStyle }
-                : { backgroundColor: "#e0e0e0", ...buttonStyle }
-            }
+            style={{
+              backgroundColor: i === activeTabIndex ? "#ffffff" : "#e0e0e0",
+              ...buttonStyle,
+            }}
           >
-            Search
-            <ButtonBase
-              onClick={() => setExistTabs({ ...existTabs, searchTab: false })}
-            >
+            {{ search: "Search", graph: "Graph" }[tab.type]}
+            <ButtonBase onClick={() => setTabs(tabs.filter((_, j) => i !== j))}>
               <CloseIcon />
             </ButtonBase>
           </ButtonBase>
-        )}
-        {existTabs.graphTab && (
-          <ButtonBase
-            onClick={() => handleTabClick("graphTab")}
-            type="button"
-            style={
-              activeTab === "graphTab"
-                ? { backgroundColor: "#ffffff", ...buttonStyle }
-                : { backgroundColor: "#e0e0e0", ...buttonStyle }
-            }
-          >
-            Graph
-            <ButtonBase
-              onClick={() => setExistTabs({ ...existTabs, graphTab: false })}
-            >
-              <CloseIcon />
-            </ButtonBase>
-          </ButtonBase>
-        )}
+        ))}
       </div>
-      {activeTab === "searchTab" && <SearchArea />}
-      {activeTab === "graphTab" && <GraphArea />}
+      {activeTab.type === "search" && (
+        <SearchArea
+          onVisualize={(paperIds) => {
+            setTabs([...tabs, { type: "graph", paperIds }]);
+            setActiveTabIndex(tabs.length);
+          }}
+        />
+      )}
+      {activeTab.type === "graph" && (
+        <GraphArea paperIds={activeTab.paperIds} />
+      )}
     </div>
   );
 }
