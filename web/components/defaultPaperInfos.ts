@@ -6,7 +6,7 @@ const defaultPaperInfos = [
     year: 2007,
     journal: "Physical Review Letters",
     tags: ["topological insulator", "superconductor", "proximity effect"],
-    citations: ["2", "3"],
+    citations: ["3"],
     citedBy: [],
   },
   {
@@ -31,13 +31,45 @@ const defaultPaperInfos = [
   },
   {
     id: "4",
-    author: "Piyo Piyo.",
-    title: "piyo piyo",
-    year: 2003,
-    journal: "PIyo Piyo Journal",
+    author: "Fu Liang",
+    title:
+      "Superconducting Proximity Effect and Majorana Fermions at the Surface of a Topological Insulator",
+    journal: "PRL",
+    year: 2008,
     tags: ["hoge", "piyo"],
     citations: [],
     citedBy: ["1", "2"],
+  },
+  {
+    id: "5",
+    author: "Takahiro Anan",
+    title:
+      "Time dependent Gutzwiller simulation of Floquet topological superconductivity",
+    journal: "Phys. Rev. B",
+    year: 2023,
+    tags: ["superconductor"],
+    citations: ["4"],
+    citedBy: [],
+  },
+  {
+    id: "6",
+    author: "Shogo Nakamura",
+    title: "The difference between grid and flexbox",
+    journal: "Science",
+    year: 2020,
+    tags: ["flexbox"],
+    citations: ["3"],
+    citedBy: [],
+  },
+  {
+    id: "7",
+    author: "Tatsuhiko Nagaya",
+    title: "How to use git",
+    journal: "Nature",
+    year: 2020,
+    tags: ["commit"],
+    citations: ["4"],
+    citedBy: [],
   },
 ];
 
