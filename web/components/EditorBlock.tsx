@@ -1,17 +1,20 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { usePaperInfosContext, useSetPaperInfosContext } from "./contexts";
 import type { PaperInfo } from "../src/App";
 
 type EditorBlockProps = {
   editorTarget: keyof PaperInfo;
-  maxRows: number;
-  editingIndex: number;
+  value: string | string[];
+  onChange(value: string | string[]): void;
 };
 
+// type Props2 = {
+//   label: string;
+//   value: string;
+//   onChange(value: string): void;
+// }
+
 export default function EditorBlock(props: EditorBlockProps) {
-  const paperInfos = usePaperInfosContext();
-  const setPaperInfos = useSetPaperInfosContext();
-  const { editorTarget, maxRows, editingIndex } = props;
+  const { editorTarget, value, onChange } = props;
 
   return (
     <Box sx={{ my: 2 }}>
@@ -21,21 +24,9 @@ export default function EditorBlock(props: EditorBlockProps) {
       </Typography>
       <TextField
         multiline
-        maxRows={maxRows}
-        defaultValue={paperInfos[editingIndex]?.[editorTarget]}
-        onChange={(e) => {
-          setPaperInfos(
-            paperInfos.map((paperInfo, index) => {
-              if (index === editingIndex) {
-                return {
-                  ...paperInfo,
-                  [editorTarget]: e.target.value,
-                };
-              }
-              return paperInfo;
-            })
-          );
-        }}
+        rows={1}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
     </Box>
   );

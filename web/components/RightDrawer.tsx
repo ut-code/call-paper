@@ -1,14 +1,47 @@
 import { Box, Button, Drawer } from "@mui/material";
+import { useEffect, useState } from "react";
 import EditorBlock from "./EditorBlock";
+import type { PaperInfo } from "../src/App";
+import { useSetPaperInfosContext, usePaperInfosContext } from "./contexts";
 
 type RightDrawerProps = {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: (open: boolean) => void;
   editingIndex: number;
 };
 
 export default function RightDrawer(props: RightDrawerProps) {
   const { open, setOpen, editingIndex } = props;
+  const paperInfos = usePaperInfosContext();
+  const setPaperInfos = useSetPaperInfosContext();
+  const [editingPaper, setEditingPaper] = useState<PaperInfo>({
+    id: "",
+    author: "",
+    title: "",
+    year: "",
+    journal: "",
+    tags: [""],
+    citations: [""],
+    citedBy: [""],
+  });
+
+  useEffect(() => {
+    if (!paperInfos[editingIndex]) {
+      setEditingPaper({
+        id: "",
+        author: "",
+        title: "",
+        year: "",
+        journal: "",
+        tags: [""],
+        citations: [""],
+        citedBy: [""],
+      });
+    } else {
+      setEditingPaper(paperInfos[editingIndex] as PaperInfo);
+    }
+  }, [paperInfos, editingIndex, open]);
+
   return (
     <Box>
       <Drawer
@@ -40,38 +73,73 @@ export default function RightDrawer(props: RightDrawerProps) {
           <Box>
             <EditorBlock
               editorTarget="title"
-              maxRows={4}
-              editingIndex={editingIndex}
+              value={editingPaper.title}
+              onChange={(value) => {
+                setEditingPaper({
+                  ...paperInfos[editingIndex],
+                  title: value,
+                } as PaperInfo);
+              }}
             />
             <EditorBlock
               editorTarget="year"
-              maxRows={1}
-              editingIndex={editingIndex}
+              value={editingPaper.year}
+              onChange={(value) => {
+                setEditingPaper({
+                  ...paperInfos[editingIndex],
+                  year: value,
+                } as PaperInfo);
+              }}
             />
             <EditorBlock
               editorTarget="author"
-              maxRows={1}
-              editingIndex={editingIndex}
+              value={editingPaper.author}
+              onChange={(value) => {
+                setEditingPaper({
+                  ...paperInfos[editingIndex],
+                  author: value,
+                } as PaperInfo);
+              }}
             />
             <EditorBlock
               editorTarget="journal"
-              maxRows={1}
-              editingIndex={editingIndex}
+              value={editingPaper.journal}
+              onChange={(value) => {
+                setEditingPaper({
+                  ...paperInfos[editingIndex],
+                  journal: value,
+                } as PaperInfo);
+              }}
             />
             <EditorBlock
               editorTarget="tags"
-              maxRows={1}
-              editingIndex={editingIndex}
+              value={editingPaper.tags}
+              onChange={(value) => {
+                setEditingPaper({
+                  ...paperInfos[editingIndex],
+                  tags: value,
+                } as PaperInfo);
+              }}
             />
             <EditorBlock
               editorTarget="citations"
-              maxRows={1}
-              editingIndex={editingIndex}
+              value={editingPaper.citations}
+              onChange={(value) => {
+                setEditingPaper({
+                  ...paperInfos[editingIndex],
+                  citations: value,
+                } as PaperInfo);
+              }}
             />
             <EditorBlock
               editorTarget="citedBy"
-              maxRows={1}
-              editingIndex={editingIndex}
+              value={editingPaper.citedBy}
+              onChange={(value) => {
+                setEditingPaper({
+                  ...paperInfos[editingIndex],
+                  citedBy: value,
+                } as PaperInfo);
+              }}
             />
           </Box>
         </Box>
@@ -85,7 +153,22 @@ export default function RightDrawer(props: RightDrawerProps) {
             gap: "12px",
           }}
         >
-          <Button variant="contained">SAVE</Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setPaperInfos(
+                paperInfos.map((paperInfo, index) => {
+                  if (index === editingIndex) {
+                    return editingPaper;
+                  }
+                  return paperInfo;
+                })
+              );
+              setOpen(false);
+            }}
+          >
+            SAVE
+          </Button>
           <Button
             variant="outlined"
             onClick={() => {
