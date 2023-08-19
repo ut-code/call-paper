@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "setup": "npm ci && npm --prefix web ci && npm --prefix functions ci",
+    "build": "npm --prefix web run build && npm --prefix functions run build"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,6 @@
   "devDependencies": {
     "eslint": "^8.47.0",
     "eslint-config-airbnb-typescript-prettier": "^5.0.0",
-    "firebase-tools": "^12.4.8",
     "prettier": "^2.8.8"
   }
 }

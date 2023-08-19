@@ -1,26 +1,17 @@
 {
   "name": "functions",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc --watch",
-    "type-check": "tsc --noEmit",
-    "serve": "npm run build && firebase emulators:start --only functions",
-    "shell": "npm run build && firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
-  },
-  "engines": {
-    "node": "18"
-  },
-  "main": "lib/index.js",
-  "dependencies": {
-    "firebase-admin": "^11.8.0",
-    "firebase-functions": "^4.3.1"
+    "build": "esbuild src/*.ts --outdir=../dist/functions --bundle",
+    "type-check": "tsc"
   },
   "devDependencies": {
-    "typescript": "^4.9.0",
-    "firebase-functions-test": "^3.1.0"
+    "@cloudflare/workers-types": "^4.20230419.0",
+    "esbuild": "^0.19.2",
+    "typescript": "^5.0.4"
   },
-  "private": true
+  "dependencies": {
+    "mathjs": "^11.9.1"
+  }
 }
