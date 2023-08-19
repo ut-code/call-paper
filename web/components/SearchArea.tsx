@@ -3,7 +3,6 @@ import SearchBar from "./SearchBar";
 import PaperList from "./PaperList";
 import BottomBar from "./BottomBar";
 import RightDrawer from "./RightDrawer";
-import { EditingIndexContext, SetEditingIndexContext } from "./contexts";
 
 export default function SearchArea() {
   const [editingIndex, setEditingIndex] = useState<number>(-1);
@@ -19,29 +18,29 @@ export default function SearchArea() {
   //   setOpen(isOpen);
   // };
   return (
-    <EditingIndexContext.Provider value={editingIndex}>
-      <SetEditingIndexContext.Provider value={setEditingIndex}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateRows: "max-content minmax(0, 1fr)",
-          }}
-        >
-          <SearchBar />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "minmax(0, 1fr) max-content",
-            }}
-          >
-            <div style={contentStyle}>
-              <PaperList setOpen={setOpen} />
-              <BottomBar />
-            </div>
-            <RightDrawer open={open} setOpen={setOpen} />
-          </div>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateRows: "max-content minmax(0, 1fr)",
+      }}
+    >
+      <SearchBar />
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1fr) max-content",
+        }}
+      >
+        <div style={contentStyle}>
+          <PaperList setOpen={setOpen} setEditingIndex={setEditingIndex} />
+          <BottomBar />
         </div>
-      </SetEditingIndexContext.Provider>
-    </EditingIndexContext.Provider>
+        <RightDrawer
+          open={open}
+          setOpen={setOpen}
+          editingIndex={editingIndex}
+        />
+      </div>
+    </div>
   );
 }

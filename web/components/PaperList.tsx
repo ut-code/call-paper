@@ -3,17 +3,16 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { useContext } from "react";
-import { PaperInfosContext, SetEditingIndexContext } from "./contexts";
+import { usePaperInfosContext } from "./contexts";
 
 type PaperListProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditingIndex: (index: number) => void;
 };
 
 export default function PaperList(props: PaperListProps) {
-  const paperInfos = useContext(PaperInfosContext);
-  const setEditingIndex = useContext(SetEditingIndexContext);
-  const { setOpen } = props;
+  const paperInfos = usePaperInfosContext();
+  const { setOpen, setEditingIndex } = props;
   return (
     <Box
       sx={{

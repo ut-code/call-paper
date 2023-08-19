@@ -3,9 +3,10 @@ import MenuBar from "../components/MenuBar";
 import TabView from "../components/TabView";
 import "./App.css";
 import defaultPaperInfos from "../components/defaultPaperInfos";
+
 import {
-  PaperInfosContext,
-  SetPaperInfosContext,
+  PaperInfosContextProvider,
+  SetPaperInfosContextProvider,
 } from "../components/contexts";
 
 export type PaperInfo = {
@@ -23,8 +24,8 @@ function App() {
   const [paperInfos, setPaperInfos] = useState<PaperInfo[]>(defaultPaperInfos);
 
   return (
-    <PaperInfosContext.Provider value={paperInfos}>
-      <SetPaperInfosContext.Provider value={setPaperInfos}>
+    <PaperInfosContextProvider value={paperInfos}>
+      <SetPaperInfosContextProvider value={setPaperInfos}>
         <div
           style={{
             display: "grid",
@@ -35,8 +36,8 @@ function App() {
           <MenuBar />
           <TabView />
         </div>
-      </SetPaperInfosContext.Provider>
-    </PaperInfosContext.Provider>
+      </SetPaperInfosContextProvider>
+    </PaperInfosContextProvider>
   );
 }
 

@@ -1,22 +1,17 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { useContext } from "react";
-import {
-  EditingIndexContext,
-  PaperInfosContext,
-  SetPaperInfosContext,
-} from "./contexts";
+import { usePaperInfosContext, useSetPaperInfosContext } from "./contexts";
 import type { PaperInfo } from "../src/App";
 
 type EditorBlockProps = {
   editorTarget: keyof PaperInfo;
   maxRows: number;
+  editingIndex: number;
 };
 
 export default function EditorBlock(props: EditorBlockProps) {
-  const paperInfos = useContext(PaperInfosContext);
-  const setPaperInfos = useContext(SetPaperInfosContext);
-  const editingIndex = useContext(EditingIndexContext);
-  const { editorTarget, maxRows } = props;
+  const paperInfos = usePaperInfosContext();
+  const setPaperInfos = useSetPaperInfosContext();
+  const { editorTarget, maxRows, editingIndex } = props;
 
   return (
     <Box sx={{ my: 2 }}>

@@ -4,10 +4,11 @@ import EditorBlock from "./EditorBlock";
 type RightDrawerProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  editingIndex: number;
 };
 
 export default function RightDrawer(props: RightDrawerProps) {
-  const { open, setOpen } = props;
+  const { open, setOpen, editingIndex } = props;
   return (
     <Box>
       <Drawer
@@ -37,13 +38,41 @@ export default function RightDrawer(props: RightDrawerProps) {
           }}
         >
           <Box>
-            <EditorBlock editorTarget="title" maxRows={4} />
-            <EditorBlock editorTarget="year" maxRows={1} />
-            <EditorBlock editorTarget="author" maxRows={1} />
-            <EditorBlock editorTarget="journal" maxRows={1} />
-            <EditorBlock editorTarget="tags" maxRows={1} />
-            <EditorBlock editorTarget="citations" maxRows={1} />
-            <EditorBlock editorTarget="citedBy" maxRows={1} />
+            <EditorBlock
+              editorTarget="title"
+              maxRows={4}
+              editingIndex={editingIndex}
+            />
+            <EditorBlock
+              editorTarget="year"
+              maxRows={1}
+              editingIndex={editingIndex}
+            />
+            <EditorBlock
+              editorTarget="author"
+              maxRows={1}
+              editingIndex={editingIndex}
+            />
+            <EditorBlock
+              editorTarget="journal"
+              maxRows={1}
+              editingIndex={editingIndex}
+            />
+            <EditorBlock
+              editorTarget="tags"
+              maxRows={1}
+              editingIndex={editingIndex}
+            />
+            <EditorBlock
+              editorTarget="citations"
+              maxRows={1}
+              editingIndex={editingIndex}
+            />
+            <EditorBlock
+              editorTarget="citedBy"
+              maxRows={1}
+              editingIndex={editingIndex}
+            />
           </Box>
         </Box>
         <Box
