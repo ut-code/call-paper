@@ -1,16 +1,9 @@
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ButtonBase from "@mui/material/ButtonBase";
+import { IconButton } from "@mui/material";
 import SearchArea from "./SearchArea";
 import GraphArea from "./GraphArea";
-
-const buttonStyle = {
-  borderRight: "1px solid #757575",
-  display: "flex",
-  padding: "12px 12px 12px 20px",
-  alignItems: "center",
-  gap: "12px",
-};
 
 type Tab = { type: "search" } | { type: "graph"; paperIds: string[] };
 
@@ -30,26 +23,49 @@ function TabComponent() {
       <div
         style={{
           display: "flex",
-          flex: "auto",
+          height: "50px",
           backgroundColor: "#e0e0e0",
           borderTop: "1px solid #757575",
           borderBottom: "1px solid #757575",
         }}
       >
         {tabs.map((tab, i) => (
-          <ButtonBase
-            onClick={() => setActiveTabIndex(i)}
-            type="button"
-            style={{
-              backgroundColor: i === activeTabIndex ? "#ffffff" : "#e0e0e0",
-              ...buttonStyle,
-            }}
-          >
-            {{ search: "Search", graph: "Graph" }[tab.type]}
-            <ButtonBase onClick={() => setTabs(tabs.filter((_, j) => i !== j))}>
-              <CloseIcon />
+          <div style={{ position: "relative" }}>
+            <ButtonBase
+              onClick={() => setActiveTabIndex(i)}
+              type="button"
+              style={{
+                height: "100%",
+                backgroundColor: i === activeTabIndex ? "#ffffff" : "#e0e0e0",
+                borderRight: "1px solid #757575",
+                padding: "0 20px",
+                paddingRight: tabs.length > 1 ? "40px" : "20px",
+              }}
+            >
+              {{ search: "Search", graph: "Graph" }[tab.type]}
             </ButtonBase>
-          </ButtonBase>
+            {tabs.length > 1 && (
+              <IconButton
+                style={{
+                  position: "absolute",
+                  right: "8px",
+                  top: "calc(50% - 15px)",
+                  width: "30px",
+                  height: "30px",
+                }}
+                onClick={() => {
+                  setActiveTabIndex(
+                    activeTabIndex >= i && activeTabIndex < tabs.length - 1
+                      ? activeTabIndex
+                      : activeTabIndex - 1
+                  );
+                  setTabs(tabs.filter((_, j) => i !== j));
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            )}
+          </div>
         ))}
       </div>
       {activeTab.type === "search" && (
