@@ -13,7 +13,7 @@ export type PaperInfo = {
   id: string;
   author: string;
   title: string;
-  year: string;
+  year: number;
   journal: string;
   tags: string[];
   citations: string[];

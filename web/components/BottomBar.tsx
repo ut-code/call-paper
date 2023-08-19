@@ -11,7 +11,12 @@ const buttonStyle = {
   alignSelf: "stretch",
 };
 
-export default function BottomBar() {
+export type BottomBarProps = {
+  onVisualize(): void;
+};
+
+export default function BottomBar(props: BottomBarProps) {
+  const { onVisualize } = props;
   return (
     <Box
       style={{
@@ -28,7 +33,7 @@ export default function BottomBar() {
       }}
     >
       <span style={{ flex: "auto" }}>12 item(s) selected</span>
-      <ButtonBase type="button" style={buttonStyle}>
+      <ButtonBase type="button" style={buttonStyle} onClick={onVisualize}>
         <FlareIcon />
         VISUALIZE
       </ButtonBase>

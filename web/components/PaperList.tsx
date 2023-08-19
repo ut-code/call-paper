@@ -9,13 +9,14 @@ import { usePaperInfosContext } from "./contexts";
 type PaperListProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingIndex: (index: number) => void;
-  // editingPaperInfo: PaperInfo | null;
-  // setEditingPaperInfo: (paperInfo: PaperInfo) => void;
+  selectedPaperIds: Set<string>;
+  setSelectedPaperIds: (selectedPaperIds: Set<string>) => void;
 };
 
 export default function PaperList(props: PaperListProps) {
   const paperInfos = usePaperInfosContext();
-  const { setOpen, setEditingIndex } = props;
+  const { setOpen, setEditingIndex, selectedPaperIds, setSelectedPaperIds } =
+    props;
   return (
     <Box
       sx={{
@@ -34,6 +35,20 @@ export default function PaperList(props: PaperListProps) {
                     e.preventDefault();
                     setEditingIndex(index);
                     setOpen(true);
+                  }}
+                  onClick={() => {
+                    const newSelectedPaperIds = new Set(selectedPaperIds);
+                    if (selectedPaperIds.has(paperInfo.id)) {
+                      newSelectedPaperIds.delete(paperInfo.id);
+                    } else {
+                      newSelectedPaperIds.add(paperInfo.id);
+                    }
+                    setSelectedPaperIds(newSelectedPaperIds);
+                  }}
+                  sx={{
+                    background: selectedPaperIds.has(paperInfo.id)
+                      ? "gray"
+                      : undefined,
                   }}
                 >
                   <ListItemText

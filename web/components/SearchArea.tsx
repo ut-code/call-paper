@@ -4,7 +4,13 @@ import PaperList from "./PaperList";
 import BottomBar from "./BottomBar";
 import RightDrawer from "./RightDrawer";
 
-export default function SearchArea() {
+export type SearchAreaProps = {
+  onVisualize(paperIds: string[]): void;
+};
+
+export default function SearchArea(props: SearchAreaProps) {
+  const { onVisualize } = props;
+  const [selectedPaperIds, setSelectedPaperIds] = useState(new Set<string>());
   const [editingIndex, setEditingIndex] = useState<number>(-1);
   const [open, setOpen] = useState<boolean>(false);
   const contentStyle: CSSProperties = {
@@ -32,8 +38,17 @@ export default function SearchArea() {
         }}
       >
         <div style={contentStyle}>
-          <PaperList setOpen={setOpen} setEditingIndex={setEditingIndex} />
-          <BottomBar />
+          <PaperList
+            setOpen={setOpen}
+            setEditingIndex={setEditingIndex}
+            selectedPaperIds={selectedPaperIds}
+            setSelectedPaperIds={setSelectedPaperIds}
+          />
+          <BottomBar
+            onVisualize={() => {
+              onVisualize([...selectedPaperIds]);
+            }}
+          />
         </div>
         <RightDrawer
           open={open}
