@@ -3,45 +3,39 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { usePaperInfosContext } from "./contexts";
 
-const paperTitles = [
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-  "Liang Fu C. Kane Proxity effect of s wave superconductor 2007",
-];
+type PaperListProps = {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditingIndex: (index: number) => void;
+};
 
-export default function PaperList() {
+export default function PaperList(props: PaperListProps) {
+  const paperInfos = usePaperInfosContext();
+  const { setOpen, setEditingIndex } = props;
   return (
     <Box
       sx={{
         width: "100%",
-        height: "560px", // todo: 動的に決定する
+        flex: "auto",
         bgcolor: "background.paper",
-        overflow: "scroll",
       }}
     >
       <nav>
         <List sx={{ p: 0, m: 0 }}>
-          {paperTitles.map((paperTitle) => {
+          {paperInfos.map((paperInfo, index) => {
             return (
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemText primary={paperTitle} />
+              <ListItem disablePadding key={paperInfo.id}>
+                <ListItemButton
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    setEditingIndex(index);
+                    setOpen(true);
+                  }}
+                >
+                  <ListItemText
+                    primary={`${paperInfo.author} ${paperInfo.title} ${paperInfo.year}`}
+                  />
                 </ListItemButton>
               </ListItem>
             );
