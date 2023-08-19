@@ -14,20 +14,20 @@ import {
 } from "./makeGraph/calcNodesPos";
 import { type edge, EdgePos } from "./makeGraph/calcEdgePos";
 import defaultPaperInfos from "./defaultPaperInfos";
+import { usePaperInfosContext } from "./contexts";
 
 // for (let index = 0; index < 10; index++) {
 //   writePaper(paps)
 // }
 
-export default function GraphArea() {
-  // for (let index = 0; index < paps.length; index++) {
-  //   console.log(pos.get(paps[index]!.id));
+export type GraphAreaProps = {
+  paperIds: string[];
+};
 
-  // }
-  const selectedIds: string[] = ["1", "2", "3", "4", "5", "6", "7"];
-
-  const paps: Paper[] = makePaps(defaultPaperInfos, selectedIds);
-  const pos: positionType = calcNodesPos(paps);
+export default function GraphArea(props: GraphAreaProps) {
+  const { paperIds } = props;
+  const papers: Paper[] = makePaps(usePaperInfosContext(), paperIds);
+  const pos: positionType = calcNodesPos(papers);
   const maxX =
     Array.from(pos.values()).reduce((max, position) => {
       return Math.max(max, position.x);
@@ -36,7 +36,7 @@ export default function GraphArea() {
     Array.from(pos.values()).reduce((max, position) => {
       return Math.max(max, position.y);
     }, -Infinity) + nodesStyle.Height;
-  const edges: edge[] = EdgePos(pos, paps);
+  const edges: edge[] = EdgePos(pos, papers);
   const padX = 0.0;
   const padY = 0.0;
 
@@ -67,7 +67,7 @@ export default function GraphArea() {
             fill="transparent"
           />
         ))}
-        {paps.map((pap) => (
+        {papers.map((pap) => (
           <ArticleNode
             key={pap.id}
             x={(pos.get(pap.id)!.x + padX) * scaleX}
