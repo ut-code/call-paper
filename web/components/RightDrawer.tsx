@@ -113,7 +113,7 @@ export default function RightDrawer(props: RightDrawerProps) {
             />
             <EditorBlock
               editorTarget="tags"
-              value={editingPaper.tags.join(" ")}
+              value={editingPaper?.tags?.join(" ")}
               onChange={(value) => {
                 setEditingPaper({
                   ...paperInfos[editingIndex],
@@ -123,7 +123,7 @@ export default function RightDrawer(props: RightDrawerProps) {
             />
             <EditorBlock
               editorTarget="citations"
-              value={editingPaper.citations.join(" ")}
+              value={editingPaper?.citations?.join(" ")}
               onChange={(value) => {
                 setEditingPaper({
                   ...paperInfos[editingIndex],
@@ -133,7 +133,7 @@ export default function RightDrawer(props: RightDrawerProps) {
             />
             <EditorBlock
               editorTarget="citedBy"
-              value={editingPaper.citedBy.join(" ")}
+              value={editingPaper?.citedBy?.join(" ")}
               onChange={(value) => {
                 setEditingPaper({
                   ...paperInfos[editingIndex],
