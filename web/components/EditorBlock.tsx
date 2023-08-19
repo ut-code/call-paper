@@ -3,8 +3,8 @@ import type { PaperInfo } from "../src/App";
 
 type EditorBlockProps = {
   editorTarget: keyof PaperInfo;
-  value: string | string[];
-  onChange(value: string | string[]): void;
+  value: string;
+  onChange(value: string): void;
 };
 
 // type Props2 = {

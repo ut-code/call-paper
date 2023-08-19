@@ -18,7 +18,7 @@ export default function RightDrawer(props: RightDrawerProps) {
     id: "",
     author: "",
     title: "",
-    year: "",
+    year: 0,
     journal: "",
     tags: [""],
     citations: [""],
@@ -31,7 +31,7 @@ export default function RightDrawer(props: RightDrawerProps) {
         id: "",
         author: "",
         title: "",
-        year: "",
+        year: 0,
         journal: "",
         tags: [""],
         citations: [""],
@@ -83,11 +83,11 @@ export default function RightDrawer(props: RightDrawerProps) {
             />
             <EditorBlock
               editorTarget="year"
-              value={editingPaper.year}
+              value={String(editingPaper.year)}
               onChange={(value) => {
                 setEditingPaper({
                   ...paperInfos[editingIndex],
-                  year: value,
+                  year: Number(value),
                 } as PaperInfo);
               }}
             />
@@ -113,31 +113,31 @@ export default function RightDrawer(props: RightDrawerProps) {
             />
             <EditorBlock
               editorTarget="tags"
-              value={editingPaper.tags}
+              value={editingPaper.tags.join(" ")}
               onChange={(value) => {
                 setEditingPaper({
                   ...paperInfos[editingIndex],
-                  tags: value,
+                  tags: value.split(","),
                 } as PaperInfo);
               }}
             />
             <EditorBlock
               editorTarget="citations"
-              value={editingPaper.citations}
+              value={editingPaper.citations.join(" ")}
               onChange={(value) => {
                 setEditingPaper({
                   ...paperInfos[editingIndex],
-                  citations: value,
+                  citations: value.split(","),
                 } as PaperInfo);
               }}
             />
             <EditorBlock
               editorTarget="citedBy"
-              value={editingPaper.citedBy}
+              value={editingPaper.citedBy.join(" ")}
               onChange={(value) => {
                 setEditingPaper({
                   ...paperInfos[editingIndex],
-                  citedBy: value,
+                  citedBy: value.split(","),
                 } as PaperInfo);
               }}
             />
