@@ -11,12 +11,18 @@ export const papers: Paper[] = [
   { id: "5", year: 2005, referencedPaperIds: ["2"] },
   { id: "6", year: 2005, referencedPaperIds: ["0"] },
   { id: "7", year: 2006, referencedPaperIds: ["2"] },
+  { id: "7.5", year: 2006, referencedPaperIds: ["2"] },
+  { id: "7.8", year: 2006, referencedPaperIds: ["2"] },
   { id: "8", year: 2007, referencedPaperIds: ["7"] },
   { id: "9", year: 2008, referencedPaperIds: ["3"] },
   { id: "10", year: 2008, referencedPaperIds: ["2"] },
-  { id: "11", year: 2008, referencedPaperIds: ["3"] },
-  { id: "12", year: 2008, referencedPaperIds: ["5"] },
-  { id: "13", year: 2008, referencedPaperIds: ["7"] },
+  { id: "11", year: 2009, referencedPaperIds: ["3"] },
+  { id: "12", year: 2010, referencedPaperIds: ["5"] },
+  { id: "13", year: 2011, referencedPaperIds: ["7"] },
+  { id: "14", year: 2012, referencedPaperIds: ["7"] },
+  { id: "15", year: 2013, referencedPaperIds: ["7"] },
+  { id: "16", year: 2014, referencedPaperIds: ["7"] },
+  { id: "17", year: 2015, referencedPaperIds: ["7"] },
 ];
 
 export type positionType = Map<string, { x: number; y: number }>;
@@ -24,17 +30,6 @@ const paperPositions: positionType = new Map();
 
 const paper = papers[0]!;
 paperPositions.get(paper.id)!;
-
-// export function writePaper(paps:Paper[]) {
-//     // const year:number = Math.floor(Math.random() * 2);
-//     const year:number = Math.floor(Math.random() * 2)+paps[paps.length-1]!.year;
-//     const citeNum:number = Math.floor(Math.random() * paps.length-2);
-//     const citeList:number[] = [];
-//     for (let i = 0; i < citeNum; i++) {
-//         citeList.push(Math.floor(Math.random() * citeNum+1))
-//     }
-//     paps.push({id:crypto.randomUUID(),year:year,referencedPaperIds:citeList})
-// }
 
 function makeYears(paps: Paper[]) {
   const yearList: number[] = [paps[0]!.year];
