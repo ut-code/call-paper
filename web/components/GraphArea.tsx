@@ -24,7 +24,7 @@ export default function GraphArea() {
   //   console.log(pos.get(paps[index]!.id));
 
   // }
-  const selectedIds: string[] = ["1", "2", "3"];
+  const selectedIds: string[] = ["1", "2", "3", "4", "5", "6", "7"];
 
   const paps: Paper[] = makePaps(defaultPaperInfos, selectedIds);
   const pos: positionType = calcNodesPos(paps);
@@ -37,6 +37,8 @@ export default function GraphArea() {
       return Math.max(max, position.y);
     }, -Infinity) + nodesStyle.Height;
   const edges: edge[] = EdgePos(pos, paps);
+  const padX = 0.0;
+  const padY = 0.0;
 
   return (
     <Box
@@ -47,14 +49,20 @@ export default function GraphArea() {
         overflow: "scroll",
       }}
     >
-      <svg viewBox={`0 0 ${maxX * scaleX} ${maxY * scaleY}`}>
+      <svg
+        width={`${(maxX + padX) * scaleX}`}
+        height={`${(maxY + padY) * scaleY}`}
+        viewBox={`-10 -10 ${maxX * scaleX + 20} ${maxY * scaleY + 20}`}
+      >
         {edges.map((edge) => (
           <path
-            d={`M ${edge.startX * scaleX} ${edge.startY * scaleY} C ${
-              edge.startControlX * scaleX
-            } ${edge.startControlY * scaleY}, ${edge.endControlX * scaleX} ${
-              edge.endControlY * scaleY
-            }, ${edge.endX * scaleX} ${edge.endY * scaleY}`}
+            d={`M ${(edge.startX + padX) * scaleX} ${
+              (edge.startY + padY) * scaleY
+            } C ${(edge.startControlX + padX) * scaleX} ${
+              (edge.startControlY + padY) * scaleY
+            }, ${(edge.endControlX + padX) * scaleX} ${
+              (edge.endControlY + padY) * scaleY
+            }, ${(edge.endX + padX) * scaleX} ${(edge.endY + padY) * scaleY}`}
             stroke="black"
             fill="transparent"
           />
@@ -62,14 +70,17 @@ export default function GraphArea() {
         {paps.map((pap) => (
           <ArticleNode
             key={pap.id}
-            x={pos.get(pap.id)!.x * scaleX}
-            y={pos.get(pap.id)!.y * scaleY}
+            x={(pos.get(pap.id)!.x + padX) * scaleX}
+            y={(pos.get(pap.id)!.y + padY) * scaleY}
             author={
               defaultPaperInfos.find((papTemp) => papTemp.id === pap.id)!.author
             }
             publisher={
               defaultPaperInfos.find((papTemp) => papTemp.id === pap.id)!
                 .journal
+            }
+            year={
+              defaultPaperInfos.find((papTemp) => papTemp.id === pap.id)!.year
             }
           />
         ))}
