@@ -5,16 +5,16 @@ import type { PaperInfo } from "../src/App";
 import { useSetPaperInfosContext, usePaperInfosContext } from "./contexts";
 
 type RightDrawerProps = {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  editingIndex: number;
+  drawerExpansion: boolean;
+  setDrawerExpansion: (open: boolean) => void;
+  paperIndex: number;
 };
 
 export default function RightDrawer(props: RightDrawerProps) {
-  const { open, setOpen, editingIndex } = props;
+  const { drawerExpansion, setDrawerExpansion, paperIndex } = props;
   const paperInfos = usePaperInfosContext();
   const setPaperInfos = useSetPaperInfosContext();
-  const [editingPaper, setEditingPaper] = useState<PaperInfo>({
+  const [selectedPaper, setSeletedPaper] = useState<PaperInfo>({
     id: "",
     author: "",
     title: "",
@@ -24,10 +24,9 @@ export default function RightDrawer(props: RightDrawerProps) {
     citations: [""],
     citedBy: [""],
   });
-
   useEffect(() => {
-    if (!paperInfos[editingIndex]) {
-      setEditingPaper({
+    if (paperIndex === -2) {
+      setSeletedPaper({
         id: "",
         author: "",
         title: "",
@@ -38,17 +37,18 @@ export default function RightDrawer(props: RightDrawerProps) {
         citedBy: [""],
       });
     } else {
-      setEditingPaper(paperInfos[editingIndex] as PaperInfo);
+      setSeletedPaper(paperInfos[paperIndex] as PaperInfo);
     }
-  }, [paperInfos, editingIndex, open]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paperIndex]);
 
   return (
     <Box>
       <Drawer
         anchor="right"
-        open={open}
+        open={drawerExpansion}
         onClose={() => {
-          setOpen(false);
+          setDrawerExpansion(false);
         }}
         sx={{
           flexShrink: 0,
@@ -73,70 +73,84 @@ export default function RightDrawer(props: RightDrawerProps) {
           <Box>
             <EditorBlock
               editorTarget="title"
-              value={editingPaper.title}
+              value={selectedPaper.title}
               onChange={(value) => {
-                setEditingPaper({
-                  ...paperInfos[editingIndex],
+                setSeletedPaper({
+                  ...(paperIndex === -2
+                    ? selectedPaper
+                    : paperInfos[paperIndex]),
                   title: value,
                 } as PaperInfo);
               }}
             />
             <EditorBlock
               editorTarget="year"
-              value={String(editingPaper.year)}
+              value={String(selectedPaper.year)}
               onChange={(value) => {
-                setEditingPaper({
-                  ...paperInfos[editingIndex],
+                setSeletedPaper({
+                  ...(paperIndex === -2
+                    ? selectedPaper
+                    : paperInfos[paperIndex]),
                   year: Number(value),
                 } as PaperInfo);
               }}
             />
             <EditorBlock
               editorTarget="author"
-              value={editingPaper.author}
+              value={selectedPaper.author}
               onChange={(value) => {
-                setEditingPaper({
-                  ...paperInfos[editingIndex],
+                setSeletedPaper({
+                  ...(paperIndex === -2
+                    ? selectedPaper
+                    : paperInfos[paperIndex]),
                   author: value,
                 } as PaperInfo);
               }}
             />
             <EditorBlock
               editorTarget="journal"
-              value={editingPaper.journal}
+              value={selectedPaper.journal}
               onChange={(value) => {
-                setEditingPaper({
-                  ...paperInfos[editingIndex],
+                setSeletedPaper({
+                  ...(paperIndex === -2
+                    ? selectedPaper
+                    : paperInfos[paperIndex]),
                   journal: value,
                 } as PaperInfo);
               }}
             />
             <EditorBlock
               editorTarget="tags"
-              value={editingPaper?.tags?.join(" ")}
+              value={selectedPaper?.tags?.join(" ")}
               onChange={(value) => {
-                setEditingPaper({
-                  ...paperInfos[editingIndex],
+                setSeletedPaper({
+                  ...(paperIndex === -2
+                    ? selectedPaper
+                    : paperInfos[paperIndex]),
                   tags: value.split(","),
                 } as PaperInfo);
               }}
             />
             <EditorBlock
               editorTarget="citations"
-              value={editingPaper?.citations?.join(" ")}
+              value={selectedPaper?.citations?.join(" ")}
               onChange={(value) => {
-                setEditingPaper({
-                  ...paperInfos[editingIndex],
+                setSeletedPaper({
+                  ...(paperIndex === -2
+                    ? selectedPaper
+                    : paperInfos[paperIndex]),
                   citations: value.split(","),
                 } as PaperInfo);
               }}
             />
             <EditorBlock
               editorTarget="citedBy"
-              value={editingPaper?.citedBy?.join(" ")}
+              value={selectedPaper?.citedBy?.join(" ")}
               onChange={(value) => {
-                setEditingPaper({
-                  ...paperInfos[editingIndex],
+                setSeletedPaper({
+                  ...(paperIndex === -2
+                    ? selectedPaper
+                    : paperInfos[paperIndex]),
                   citedBy: value.split(","),
                 } as PaperInfo);
               }}
@@ -156,31 +170,31 @@ export default function RightDrawer(props: RightDrawerProps) {
           <Button
             variant="contained"
             onClick={() => {
-              if (editingIndex === -2) {
+              if (paperIndex === -2) {
                 setPaperInfos([
                   ...paperInfos,
                   {
                     id: String(paperInfos.length + 1),
-                    author: editingPaper.author ?? "",
-                    title: editingPaper.title ?? "",
-                    year: editingPaper.year ?? "",
-                    journal: editingPaper.journal ?? "",
-                    tags: editingPaper.tags ?? [],
-                    citations: editingPaper.citations ?? [],
-                    citedBy: editingPaper.citedBy ?? [],
+                    author: selectedPaper.author ?? "",
+                    title: selectedPaper.title ?? "",
+                    year: selectedPaper.year ?? "",
+                    journal: selectedPaper.journal ?? "",
+                    tags: selectedPaper.tags ?? [],
+                    citations: selectedPaper.citations ?? [],
+                    citedBy: selectedPaper.citedBy ?? [],
                   },
                 ]);
               } else {
                 setPaperInfos(
                   paperInfos.map((paperInfo, index) => {
-                    if (index === editingIndex) {
-                      return editingPaper;
+                    if (index === paperIndex) {
+                      return selectedPaper;
                     }
                     return paperInfo;
                   })
                 );
               }
-              setOpen(false);
+              setDrawerExpansion(false);
             }}
           >
             SAVE
@@ -188,7 +202,7 @@ export default function RightDrawer(props: RightDrawerProps) {
           <Button
             variant="outlined"
             onClick={() => {
-              setOpen(false);
+              setDrawerExpansion(false);
             }}
           >
             CANCEL
