@@ -41,23 +41,6 @@ export default function RightDrawer(props: RightDrawerProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paperIndex]);
-  // useEffect(() => {
-  //   if (!paperInfos[paperIndex]) {
-  //     // add a new paper?
-  //     setSeletedPaper({
-  //       id: "",
-  //       author: "",
-  //       title: "",
-  //       year: 0,
-  //       journal: "",
-  //       tags: [""],
-  //       citations: [""],
-  //       citedBy: [""],
-  //     });
-  //   } else {
-  //     setSeletedPaper(paperInfos[paperIndex] as PaperInfo);
-  //   }
-  // }, [paperInfos, paperIndex, drawerExpansion]);
 
   return (
     <Box>
