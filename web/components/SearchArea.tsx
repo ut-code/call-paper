@@ -11,7 +11,7 @@ export type SearchAreaProps = {
 export default function SearchArea(props: SearchAreaProps) {
   const { onVisualize } = props;
   const [selectedPaperIds, setSelectedPaperIds] = useState(new Set<string>());
-  const [editingIndex, setEditingIndex] = useState<number>(-1);
+  const [editingIndex, setEditingIndex] = useState<number>(-2);
   const [open, setOpen] = useState<boolean>(false);
   const contentStyle: CSSProperties = {
     overflow: "auto",
@@ -51,9 +51,9 @@ export default function SearchArea(props: SearchAreaProps) {
           />
         </div>
         <RightDrawer
-          open={open}
-          setOpen={setOpen}
-          editingIndex={editingIndex}
+          drawerExpansion={open}
+          setDrawerExpansion={setOpen}
+          paperIndex={editingIndex}
         />
       </div>
     </div>
