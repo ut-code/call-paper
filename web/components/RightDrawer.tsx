@@ -184,6 +184,16 @@ export default function RightDrawer(props: RightDrawerProps) {
                     citedBy: selectedPaper.citedBy ?? [],
                   },
                 ]);
+                setSeletedPaper({
+                  id: "",
+                  author: "",
+                  title: "",
+                  year: 0,
+                  journal: "",
+                  tags: [""],
+                  citations: [""],
+                  citedBy: [""],
+                });
               } else {
                 setPaperInfos(
                   paperInfos.map((paperInfo, index) => {
