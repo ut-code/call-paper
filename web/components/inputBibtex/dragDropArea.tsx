@@ -4,18 +4,14 @@ import { usePaperInfosContext, useSetPaperInfosContext } from "../contexts";
 import fileToPaperInfo from "./fileToPaperInfo";
 import type { PaperInfo } from "../../src/App";
 
-function generateAddedPapers(acceptedFiles: []) {
-  const newPapers: PaperInfo[] = [];
-  for (const file of acceptedFiles) {
+async function loadFile(file) {
+  return new Promise((resolve) => {
     const reader = new FileReader();
     reader.readAsText(file);
     reader.onload = () => {
-      const content = reader.result;
-      newPapers.push(fileToPaperInfo(content));
+      const content = fileToPaperInfo(reader.result);
+      resolve(content);
     };
-  }
-  return new Promise((resolve) => {
-    resolve(newPapers);
   });
 }
 
@@ -26,9 +22,7 @@ function BibtexFileReader({ children }) {
   const [newPapers, setNewPapers] = useState<PaperInfo[]>([]);
   console.log("useState", newPapers.length);
   const onDrop = useCallback(async (acceptedFiles) => {
-    const theNewPapers = await generateAddedPapers(acceptedFiles);
-    console.log("onDrop callback acceptedFiles.length", acceptedFiles.length);
-    console.log("onDrop callback theNewPapers.length", theNewPapers.length);
+    const theNewPapers = await Promise.all(acceptedFiles.map(loadFile));
     setNewPapers(theNewPapers);
   }, []);
   useEffect(() => {
