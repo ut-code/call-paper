@@ -1,44 +1,44 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { usePaperInfosContext, useSetPaperInfosContext } from "../contexts";
 import fileToPaperInfo from "./fileToPaperInfo";
+import type { PaperInfo } from "../../src/App";
+
+function generateAddedPapers(acceptedFiles: []) {
+  const newPapers: PaperInfo[] = [];
+  for (const file of acceptedFiles) {
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = () => {
+      const content = reader.result;
+      newPapers.push(fileToPaperInfo(content));
+    };
+  }
+  return new Promise((resolve) => {
+    resolve(newPapers);
+  });
+}
 
 function BibtexFileReader({ children }) {
+  console.log("BibtexFileReader");
   const paperInfos = usePaperInfosContext();
   const setPaperInfos = useSetPaperInfosContext();
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      for (let i = 0; i < acceptedFiles.length; i += 1) {
-        const file = acceptedFiles[i];
-
-        // Create a FileReader to read the file content
-        try {
-          const reader = new FileReader();
-          // Read the file as text
-          reader.readAsText(file);
-          reader.onload = (e) => {
-            const content = e.target!.result;
-            // alert(`File content:\n${content}`);
-            const additionalPaper = fileToPaperInfo(content);
-            setPaperInfos([...paperInfos, additionalPaper]);
-          };
-
-          reader.onerror = (error) => {
-            console.error("Error reading file:", error);
-          };
-        } catch (error) {
-          console.error("Error:", error);
-        }
-      }
-    },
-    [paperInfos, setPaperInfos]
-  );
+  const [newPapers, setNewPapers] = useState<PaperInfo[]>([]);
+  console.log("useState", newPapers.length);
+  const onDrop = useCallback(async (acceptedFiles) => {
+    const theNewPapers = await generateAddedPapers(acceptedFiles);
+    console.log("onDrop callback acceptedFiles.length", acceptedFiles.length);
+    console.log("onDrop callback theNewPapers.length", theNewPapers.length);
+    setNewPapers(theNewPapers);
+  }, []);
+  useEffect(() => {
+    setPaperInfos([...paperInfos, ...newPapers]);
+  }, [newPapers]);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: { "Bibtex/bibtex": [".bibtex"] }, // Specify accepted file types (e.g., .txt)
   });
-  console.log(paperInfos);
   return (
     <div {...getRootProps()} className="dropzone">
       <input {...getInputProps()} />
