@@ -10,6 +10,17 @@ type RightDrawerProps = {
   paperIndex: number;
 };
 
+function AuthorYearToId(authorYear: string) {
+  const paperInfos = usePaperInfosContext();
+  const authorName = authorYear.substring(0, authorYear.length - 4);
+  const year = Number(authorYear.slice(authorYear.length - 4));
+  const targetPaper = paperInfos.find((paper) => {
+    return paper.author === authorName && paper.year === year;
+  });
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return targetPaper!.id;
+}
+
 export default function RightDrawer(props: RightDrawerProps) {
   const { drawerExpansion, setDrawerExpansion, paperIndex } = props;
   const paperInfos = usePaperInfosContext();
@@ -140,6 +151,7 @@ export default function RightDrawer(props: RightDrawerProps) {
                     ? selectedPaper
                     : paperInfos[paperIndex]),
                   citations: value.split(","),
+                  // .map((citation) => AuthorYearToId(citation)),
                 } as PaperInfo);
               }}
             />

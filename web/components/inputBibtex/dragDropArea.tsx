@@ -26,6 +26,7 @@ function BibtexFileReader({ children }) {
   );
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
+    noClick: true,
     accept: { "Bibtex/bibtex": [".bibtex"] }, // Specify accepted file types (e.g., .txt)
   });
   return (
