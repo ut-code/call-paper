@@ -1,10 +1,11 @@
-import { useCallback } from "react";
+import { useCallback, type ReactNode } from "react";
 import { useDropzone } from "react-dropzone";
 import { usePaperInfosContext, useSetPaperInfosContext } from "../contexts";
 import fileToPaperInfo from "./fileToPaperInfo";
+import type { PaperInfo } from "../../src/App";
 
-async function loadFile(file) {
-  return new Promise((resolve) => {
+async function loadFile(file: File) {
+  return new Promise<PaperInfo>((resolve) => {
     const reader = new FileReader();
     reader.readAsText(file);
     reader.onload = () => {
@@ -14,11 +15,11 @@ async function loadFile(file) {
   });
 }
 
-function BibtexFileReader({ children }) {
+function BibtexFileReader({ children }: { children: ReactNode }) {
   const paperInfos = usePaperInfosContext();
   const setPaperInfos = useSetPaperInfosContext();
   const onDrop = useCallback(
-    async (acceptedFiles) => {
+    async (acceptedFiles: File[]) => {
       const newPapers = await Promise.all(acceptedFiles.map(loadFile));
       setPaperInfos([...paperInfos, ...newPapers]);
     },

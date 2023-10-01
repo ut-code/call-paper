@@ -32,7 +32,7 @@ export default function EditorBlock(props: EditorBlockProps) {
         {editorTarget === "citedBy" ? "CITED BY" : editorTarget.toUpperCase()}
       </Typography>
       <TextField
-        multiline
+        multiline={false}
         rows={1}
         value={displayedValue}
         onChange={(e) => onChange(e.target.value)}

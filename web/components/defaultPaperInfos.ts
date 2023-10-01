@@ -6,7 +6,7 @@ const defaultPaperInfos = [
     year: 2007,
     journal: "Physical Review Letters",
     tags: ["topological insulator", "superconductor", "proximity effect"],
-    citations: ["3"],
+    citations: [],
     citedBy: [],
   },
   // {

@@ -29,7 +29,7 @@ function sliceProperty(propertyName: string, fileString: string) {
   const content = contentInBraket(contentIncludingEq.slice(contentStartIndex));
   if (propertyName === "author") {
     const andIndex = content.indexOf(" and ");
-    const firstAuthor = content.substring(0, andIndex);
+    const firstAuthor = content.substring(1, andIndex);
     return firstAuthor;
   }
   return content;

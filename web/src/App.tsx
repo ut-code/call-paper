@@ -23,6 +23,7 @@ export type PaperInfo = {
 function App() {
   const [paperInfos, setPaperInfos] = useState<PaperInfo[]>(defaultPaperInfos);
 
+  console.log(paperInfos);
   return (
     <PaperInfosContextProvider value={paperInfos}>
       <SetPaperInfosContextProvider value={setPaperInfos}>
