@@ -1,8 +1,9 @@
 import { Box, Button, Drawer } from "@mui/material";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import EditorBlock from "./EditorBlock";
-import type { PaperInfo } from "../src/App";
 import { useSetPaperInfosContext, usePaperInfosContext } from "./contexts";
+import type { PaperInfo } from "../src/App";
 
 type RightDrawerProps = {
   drawerExpansion: boolean;
@@ -10,19 +11,46 @@ type RightDrawerProps = {
   paperIndex: number;
 };
 
+function AuthorYearToId(authorYear: string, paperInfos: PaperInfo[]) {
+  const authorLastName = authorYear.substring(0, authorYear.length - 4);
+  const year = Number(authorYear.slice(authorYear.length - 4));
+  const targetPaper = paperInfos.find((paper) => {
+    return (
+      paper.author.substring(0, authorLastName.length) === authorLastName &&
+      paper.year === year
+    );
+  });
+  console.log(authorYear, targetPaper!.id);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return targetPaper!.id;
+}
+function IdToAuthorYear(id: string, paperInfos: PaperInfo[]) {
+  console.log("IdToAuthorYear");
+  const targetPaper = paperInfos.find((paper) => {
+    return paper.id === id;
+  });
+  console.log(targetPaper);
+  return (
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    targetPaper!.author.substring(0, targetPaper!.author.indexOf(",")) +
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    String(targetPaper!.year)
+  );
+}
+
 export default function RightDrawer(props: RightDrawerProps) {
-  const { drawerExpansion, setDrawerExpansion, paperIndex } = props;
+  const { drawerExpansion, setDrawerExpansion, paperIndex } = props; // if paperIndex===-2, this is called by "NEW" button.
   const paperInfos = usePaperInfosContext();
   const setPaperInfos = useSetPaperInfosContext();
-  const [selectedPaper, setSeletedPaper] = useState<PaperInfo>({
+  const [selectedPaper, setSeletedPaper] = useState({
     id: "",
     author: "",
     title: "",
-    year: 0,
+    year: "",
     journal: "",
-    tags: [""],
-    citations: [""],
-    citedBy: [""],
+    tags: "",
+    citations: "",
+    citedBy: "",
   });
   useEffect(() => {
     if (paperIndex === -2) {
@@ -30,14 +58,29 @@ export default function RightDrawer(props: RightDrawerProps) {
         id: "",
         author: "",
         title: "",
-        year: 0,
+        year: "",
         journal: "",
-        tags: [""],
-        citations: [""],
-        citedBy: [""],
+        tags: "",
+        citations: "",
+        citedBy: "",
       });
     } else {
-      setSeletedPaper(paperInfos[paperIndex] as PaperInfo);
+      setSeletedPaper({
+        id: paperInfos[paperIndex]?.id ?? "",
+        author: paperInfos[paperIndex]?.author ?? "",
+        title: paperInfos[paperIndex]?.title ?? "",
+        year: String(paperInfos[paperIndex]?.year) ?? "",
+        journal: paperInfos[paperIndex]?.journal ?? "",
+        tags: paperInfos[paperIndex]?.tags.join(",") ?? "",
+        citations:
+          paperInfos[paperIndex]?.citations
+            .map((id) => IdToAuthorYear(id, paperInfos))
+            .join(",") ?? "",
+        citedBy:
+          paperInfos[paperIndex]?.citedBy
+            .map((id) => IdToAuthorYear(id, paperInfos))
+            .join(",") ?? "",
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paperIndex]);
@@ -76,11 +119,9 @@ export default function RightDrawer(props: RightDrawerProps) {
               value={selectedPaper.title}
               onChange={(value) => {
                 setSeletedPaper({
-                  ...(paperIndex === -2
-                    ? selectedPaper
-                    : paperInfos[paperIndex]),
+                  ...selectedPaper,
                   title: value,
-                } as PaperInfo);
+                });
               }}
             />
             <EditorBlock
@@ -88,11 +129,9 @@ export default function RightDrawer(props: RightDrawerProps) {
               value={String(selectedPaper.year)}
               onChange={(value) => {
                 setSeletedPaper({
-                  ...(paperIndex === -2
-                    ? selectedPaper
-                    : paperInfos[paperIndex]),
-                  year: Number(value),
-                } as PaperInfo);
+                  ...selectedPaper,
+                  year: value,
+                });
               }}
             />
             <EditorBlock
@@ -100,11 +139,9 @@ export default function RightDrawer(props: RightDrawerProps) {
               value={selectedPaper.author}
               onChange={(value) => {
                 setSeletedPaper({
-                  ...(paperIndex === -2
-                    ? selectedPaper
-                    : paperInfos[paperIndex]),
+                  ...selectedPaper,
                   author: value,
-                } as PaperInfo);
+                });
               }}
             />
             <EditorBlock
@@ -112,47 +149,39 @@ export default function RightDrawer(props: RightDrawerProps) {
               value={selectedPaper.journal}
               onChange={(value) => {
                 setSeletedPaper({
-                  ...(paperIndex === -2
-                    ? selectedPaper
-                    : paperInfos[paperIndex]),
+                  ...selectedPaper,
                   journal: value,
-                } as PaperInfo);
+                });
               }}
             />
             <EditorBlock
               editorTarget="tags"
-              value={selectedPaper?.tags?.join(" ")}
+              value={selectedPaper?.tags}
               onChange={(value) => {
                 setSeletedPaper({
-                  ...(paperIndex === -2
-                    ? selectedPaper
-                    : paperInfos[paperIndex]),
-                  tags: value.split(","),
-                } as PaperInfo);
+                  ...selectedPaper,
+                  tags: value,
+                });
               }}
             />
             <EditorBlock
               editorTarget="citations"
-              value={selectedPaper?.citations?.join(" ")}
+              value={selectedPaper?.citations}
               onChange={(value) => {
                 setSeletedPaper({
-                  ...(paperIndex === -2
-                    ? selectedPaper
-                    : paperInfos[paperIndex]),
-                  citations: value.split(","),
-                } as PaperInfo);
+                  ...selectedPaper,
+                  citations: value,
+                });
               }}
             />
             <EditorBlock
               editorTarget="citedBy"
-              value={selectedPaper?.citedBy?.join(" ")}
+              value={selectedPaper?.citedBy}
               onChange={(value) => {
                 setSeletedPaper({
-                  ...(paperIndex === -2
-                    ? selectedPaper
-                    : paperInfos[paperIndex]),
-                  citedBy: value.split(","),
-                } as PaperInfo);
+                  ...selectedPaper,
+                  citedBy: value,
+                });
               }}
             />
           </Box>
@@ -171,24 +200,52 @@ export default function RightDrawer(props: RightDrawerProps) {
             variant="contained"
             onClick={() => {
               if (paperIndex === -2) {
+                const uniqueId = uuidv4();
                 setPaperInfos([
                   ...paperInfos,
                   {
-                    id: String(paperInfos.length + 1),
+                    id: uniqueId,
                     author: selectedPaper.author ?? "",
                     title: selectedPaper.title ?? "",
-                    year: selectedPaper.year ?? "",
+                    year: Number(selectedPaper.year) ?? "",
                     journal: selectedPaper.journal ?? "",
-                    tags: selectedPaper.tags ?? [],
-                    citations: selectedPaper.citations ?? [],
-                    citedBy: selectedPaper.citedBy ?? [],
+                    tags: selectedPaper.tags.split(",") ?? [],
+                    citations:
+                      selectedPaper.citations
+                        .split(",")
+                        .map((authorYear) =>
+                          AuthorYearToId(authorYear, paperInfos)
+                        ) ?? [],
+                    citedBy: selectedPaper.citedBy.split(",") ?? [],
                   },
                 ]);
+                setSeletedPaper({
+                  id: "",
+                  author: "",
+                  title: "",
+                  year: "",
+                  journal: "",
+                  tags: "",
+                  citations: "",
+                  citedBy: "",
+                });
               } else {
                 setPaperInfos(
                   paperInfos.map((paperInfo, index) => {
                     if (index === paperIndex) {
-                      return selectedPaper;
+                      return {
+                        id: selectedPaper.id ?? "",
+                        author: selectedPaper.author ?? "",
+                        title: selectedPaper.title ?? "",
+                        year: Number(selectedPaper.year) ?? "",
+                        journal: selectedPaper.journal ?? "",
+                        tags: selectedPaper.tags.split(",") ?? [],
+                        citations:
+                          selectedPaper.citations.split(",").map((citation) => {
+                            return AuthorYearToId(citation, paperInfos);
+                          }) ?? [],
+                        citedBy: selectedPaper.citedBy.split(",") ?? [],
+                      };
                     }
                     return paperInfo;
                   })

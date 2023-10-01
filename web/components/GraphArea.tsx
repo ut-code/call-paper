@@ -13,7 +13,6 @@ import {
   makePaps,
 } from "./makeGraph/calcNodesPos";
 import { type edge, EdgePos } from "./makeGraph/calcEdgePos";
-import defaultPaperInfos from "./defaultPaperInfos";
 import { usePaperInfosContext } from "./contexts";
 
 // for (let index = 0; index < 10; index++) {
@@ -25,6 +24,7 @@ export type GraphAreaProps = {
 };
 
 export default function GraphArea(props: GraphAreaProps) {
+  const paperInfos = usePaperInfosContext();
   const { paperIds } = props;
   const papers: Paper[] = makePaps(usePaperInfosContext(), paperIds);
   const pos: positionType = calcNodesPos(papers);
@@ -72,16 +72,11 @@ export default function GraphArea(props: GraphAreaProps) {
             key={pap.id}
             x={(pos.get(pap.id)!.x + padX) * scaleX}
             y={(pos.get(pap.id)!.y + padY) * scaleY}
-            author={
-              defaultPaperInfos.find((papTemp) => papTemp.id === pap.id)!.author
-            }
+            author={paperInfos.find((papTemp) => papTemp.id === pap.id)!.author}
             publisher={
-              defaultPaperInfos.find((papTemp) => papTemp.id === pap.id)!
-                .journal
+              paperInfos.find((papTemp) => papTemp.id === pap.id)!.journal
             }
-            year={
-              defaultPaperInfos.find((papTemp) => papTemp.id === pap.id)!.year
-            }
+            year={paperInfos.find((papTemp) => papTemp.id === pap.id)!.year}
           />
         ))}
       </svg>

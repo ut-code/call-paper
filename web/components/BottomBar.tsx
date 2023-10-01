@@ -2,6 +2,7 @@ import { ButtonBase } from "@mui/material";
 import FlareIcon from "@mui/icons-material/Flare";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
+import { usePaperInfosContext } from "./contexts";
 
 const buttonStyle = {
   display: "flex",
@@ -16,6 +17,8 @@ export type BottomBarProps = {
 };
 
 export default function BottomBar(props: BottomBarProps) {
+  const paperInfo = usePaperInfosContext();
+  const paperNums = paperInfo.length;
   const { onVisualize } = props;
   return (
     <Box
@@ -32,7 +35,9 @@ export default function BottomBar(props: BottomBarProps) {
         backgroundColor: "#0D47A1",
       }}
     >
-      <span style={{ flex: "auto" }}>12 item(s) selected</span>
+      <span style={{ flex: "auto" }}>
+        {paperNums} items 12 item(s) selected
+      </span>
       <ButtonBase type="button" style={buttonStyle} onClick={onVisualize}>
         <FlareIcon />
         VISUALIZE

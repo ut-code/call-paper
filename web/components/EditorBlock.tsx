@@ -15,7 +15,16 @@ type EditorBlockProps = {
 
 export default function EditorBlock(props: EditorBlockProps) {
   const { editorTarget, value, onChange } = props;
-
+  let displayedValue = "";
+  if (editorTarget === "year") {
+    if (value === "0") {
+      displayedValue = "";
+    } else {
+      displayedValue = value;
+    }
+  } else {
+    displayedValue = value;
+  }
   return (
     <Box sx={{ my: 2 }}>
       <Typography variant="h6" gutterBottom>
@@ -23,9 +32,9 @@ export default function EditorBlock(props: EditorBlockProps) {
         {editorTarget === "citedBy" ? "CITED BY" : editorTarget.toUpperCase()}
       </Typography>
       <TextField
-        multiline
+        multiline={false}
         rows={1}
-        value={value}
+        value={displayedValue}
         onChange={(e) => onChange(e.target.value)}
       />
     </Box>
